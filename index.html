@@ -97,84 +97,13 @@ C02TW0M2HV2R
     <label for="location">Location:</label>
     <input type="text" id="location" placeholder="t.ex. Vrigstad" />
 
-    <button onclick="downloadCSV()">Ladda ner CSV-fil</button>
-    <button onclick="copyToClipboard()">Kopiera till urklipp</button>
+    <button id="downloadCsv">Ladda ner CSV-fil</button>
+    <button id="copyCsv">Kopiera till urklipp</button>
 
     <h2>Förhandsgranskning av CSV:</h2>
     <pre id="csvPreview">(Ingen data genererad ännu)</pre>
   </div>
 
-  <script>
-    const serialsField = document.getElementById("serials");
-    const identificationField = document.getElementById("identification");
-    const assetTagField = document.getElementById("assetTag");
-    const assignToUserField = document.getElementById("assignToUser");
-    const groupsField = document.getElementById("groups");
-    const deviceNameField = document.getElementById("deviceName");
-    const locationField = document.getElementById("location");
-    const preview = document.getElementById("csvPreview");
-
-    function updatePreview() {
-      const serials = serialsField.value.trim().split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-      const identification = identificationField.value.trim();
-      const assetTag = assetTagField.value.trim();
-      const assignToUser = assignToUserField.value.trim();
-      const groups = groupsField.value.trim();
-      const deviceName = deviceNameField.value.trim();
-      const location = locationField.value.trim();
-
-      const header = "SerialNumber;Identification;AssetTag;AssignToUser;MemberOfGroups;DeviceName;Location";
-
-      const rows = serials.map((sn, i) => {
-        if (!sn || sn.length < 5) return null; // krav: inte tom, inte för kort
-        return [
-          sn,
-          identification ? `${identification}${serials.length > 1 ? String(i+1).padStart(3, '0') : ''}` : "",
-          assetTag,
-          assignToUser,
-          groups,
-          deviceName,
-          location
-        ].join(";");
-      }).filter(Boolean);
-
-      const csvContent = [header, ...rows].join("\r\n");
-      preview.textContent = csvContent || "(Ingen data genererad ännu)";
-    }
-
-    function downloadCSV() {
-      const csvContent = preview.textContent;
-      const bom = '\uFEFF';
-      const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "jamf_import.csv";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-
-    function copyToClipboard() {
-      const text = preview.textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("CSV kopierad till urklipp!");
-      }, () => {
-        alert("Kunde inte kopiera till urklipp.");
-      });
-    }
-
-    [
-      serialsField,
-      identificationField,
-      assetTagField,
-      assignToUserField,
-      groupsField,
-      deviceNameField,
-      locationField
-    ].forEach(field => field.addEventListener("input", updatePreview));
-
-    updatePreview();
-  </script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
