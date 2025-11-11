@@ -17,6 +17,7 @@
       --shadow-color: rgba(0, 0, 0, 0.5);
       --border-color: #3c3c3c;
       --font-family: 'Roboto Mono', monospace;
+      --preview-bg: #333333; /* Default preview background for dark theme */
     }
 
     * {
@@ -92,7 +93,7 @@
     }
 
     pre {
-      background: #333333;
+      background: var(--preview-bg, #333333); /* Default to dark theme */
       padding: 1rem;
       border-radius: 8px;
       white-space: pre-wrap;
@@ -109,6 +110,7 @@
       --border-color: #ccc;
       --primary-color: #3498db;
       --primary-hover: #2980b9;
+      --preview-bg: #f0f0f0;
     }
 
     /* Dark theme styles */
@@ -119,6 +121,7 @@
       --border-color: #3c3c3c;
       --primary-color: #0078d7;
       --primary-hover: #005a9e;
+      --preview-bg: #333333;
     }
   </style>
 </head>
@@ -170,9 +173,21 @@ C02TW0M2HV2R
     themeSelector.addEventListener('change', (event) => {
       const theme = event.target.value;
       if (theme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.style.setProperty('--background-color', '#ffffff');
+        document.documentElement.style.setProperty('--text-color', '#333333');
+        document.documentElement.style.setProperty('--container-bg', '#f4f4f9');
+        document.documentElement.style.setProperty('--border-color', '#ccc');
+        document.documentElement.style.setProperty('--primary-color', '#3498db');
+        document.documentElement.style.setProperty('--primary-hover', '#2980b9');
+        document.documentElement.style.setProperty('--preview-bg', '#f0f0f0');
       } else if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.style.setProperty('--background-color', '#1e1e1e');
+        document.documentElement.style.setProperty('--text-color', '#d4d4d4');
+        document.documentElement.style.setProperty('--container-bg', '#252526');
+        document.documentElement.style.setProperty('--border-color', '#3c3c3c');
+        document.documentElement.style.setProperty('--primary-color', '#0078d7');
+        document.documentElement.style.setProperty('--primary-hover', '#005a9e');
+        document.documentElement.style.setProperty('--preview-bg', '#333333');
       }
     });
   </script>
