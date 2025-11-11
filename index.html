@@ -131,7 +131,7 @@
 
     <label for="themeSelector">Välj tema:</label>
     <select id="themeSelector">
-      <option value="light">Ljust tema</option>
+      <option value="light" selected>Ljust tema</option>
       <option value="dark">Mörkt tema</option>
     </select>
 
@@ -169,6 +169,15 @@ C02TW0M2HV2R
   <script type="module" src="js/main.js"></script>
   <script>
     const themeSelector = document.getElementById('themeSelector');
+
+    // Set default theme to light
+    document.documentElement.style.setProperty('--background-color', '#ffffff');
+    document.documentElement.style.setProperty('--text-color', '#333333');
+    document.documentElement.style.setProperty('--container-bg', '#f4f4f9');
+    document.documentElement.style.setProperty('--border-color', '#ccc');
+    document.documentElement.style.setProperty('--primary-color', '#3498db');
+    document.documentElement.style.setProperty('--primary-hover', '#2980b9');
+    document.documentElement.style.setProperty('--preview-bg', '#f0f0f0');
 
     themeSelector.addEventListener('change', (event) => {
       const theme = event.target.value;
