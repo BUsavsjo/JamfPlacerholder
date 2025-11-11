@@ -6,48 +6,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JAMF CSV Generator</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f9;
-      padding: 2rem;
-      color: #333;
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+
+    :root {
+      --primary-color: #0078d7;
+      --primary-hover: #005a9e;
+      --background-color: #1e1e1e;
+      --text-color: #d4d4d4;
+      --container-bg: #252526;
+      --shadow-color: rgba(0, 0, 0, 0.5);
+      --border-color: #3c3c3c;
+      --font-family: 'Roboto Mono', monospace;
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--background-color);
+      padding: 2rem;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
     .container {
       max-width: 700px;
       margin: auto;
-      background-color: white;
+      background-color: var(--container-bg);
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px var(--shadow-color);
     }
+
     h1 {
       text-align: center;
-      color: #2c3e50;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
     }
+
     label {
       display: block;
       margin-top: 1rem;
       margin-bottom: 0.5rem;
-      font-weight: bold;
+      font-weight: 500;
     }
+
     input, textarea {
       width: 100%;
       padding: 1rem;
       font-size: 1rem;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       margin-bottom: 1rem;
       box-sizing: border-box;
+      background-color: white; /* Set input boxes to white */
+      color: #333; /* Adjust text color for contrast */
     }
+
     textarea {
       height: 200px;
       resize: vertical;
     }
+
     button {
       display: block;
       width: 100%;
       padding: 0.75rem;
-      background-color: #3498db;
+      background-color: var(--primary-color);
       color: white;
       font-size: 1.1rem;
       font-weight: bold;
@@ -57,22 +86,52 @@
       transition: background-color 0.3s ease;
       margin-bottom: 0.5rem;
     }
+
     button:hover {
-      background-color: #2980b9;
+      background-color: var(--primary-hover);
     }
+
     pre {
-      background: #f0f0f0;
+      background: #333333;
       padding: 1rem;
       border-radius: 8px;
       white-space: pre-wrap;
       overflow-x: auto;
       font-family: monospace;
+      color: var(--text-color);
+    }
+
+    /* Light theme styles */
+    [data-theme="light"] {
+      --background-color: #ffffff;
+      --text-color: #333333;
+      --container-bg: #f4f4f9;
+      --border-color: #ccc;
+      --primary-color: #3498db;
+      --primary-hover: #2980b9;
+    }
+
+    /* Dark theme styles */
+    [data-theme="dark"] {
+      --background-color: #1e1e1e;
+      --text-color: #d4d4d4;
+      --container-bg: #252526;
+      --border-color: #3c3c3c;
+      --primary-color: #0078d7;
+      --primary-hover: #005a9e;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Skapa JAMF CSV</h1>
+
+    <label for="themeSelector">Välj tema:</label>
+    <select id="themeSelector">
+      <option value="light">Ljust tema</option>
+      <option value="dark">Mörkt tema</option>
+    </select>
+
     <label for="serials">Klistra in serienummer, ett per rad:</label>
     <textarea id="serials" placeholder="Ex:
 H9729TJLWW
@@ -105,5 +164,17 @@ C02TW0M2HV2R
   </div>
 
   <script type="module" src="js/main.js"></script>
+  <script>
+    const themeSelector = document.getElementById('themeSelector');
+
+    themeSelector.addEventListener('change', (event) => {
+      const theme = event.target.value;
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    });
+  </script>
 </body>
 </html>
